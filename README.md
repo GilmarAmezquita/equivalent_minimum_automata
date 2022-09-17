@@ -1,0 +1,1 @@
+# equivalent_minimum_automata
