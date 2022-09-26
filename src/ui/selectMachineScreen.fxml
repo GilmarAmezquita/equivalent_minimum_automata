@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.layout.AnchorPane?>
+
+
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="285.0" prefWidth="538.0" xmlns="http://javafx.com/javafx/18" xmlns:fx="http://javafx.com/fxml/1">
+   <children>
+      <Button layoutX="181.0" layoutY="89.0" mnemonicParsing="false" prefHeight="47.0" prefWidth="172.0" text="Moore" AnchorPane.leftAnchor="181.0" AnchorPane.rightAnchor="181.0" AnchorPane.topAnchor="89.0" />
+      <Button layoutX="181.0" layoutY="149.0" mnemonicParsing="false" prefHeight="47.0" prefWidth="172.0" text="Mealy" AnchorPane.leftAnchor="181.0" AnchorPane.rightAnchor="181.0" AnchorPane.topAnchor="149.0" />
+   </children>
+</AnchorPane>
