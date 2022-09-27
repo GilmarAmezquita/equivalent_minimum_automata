@@ -1,11 +1,11 @@
-package mooreMachine;
+package model.Moore;
 
-public class MooreState {
+public class State {
 	
 	public String state;
 	public Integer out;
 	
-	public MooreState(String n, Integer s) {
+	public State(String n, Integer s) {
 		this.state= n;
 		this.out = s;
 	}
