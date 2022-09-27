@@ -5,6 +5,7 @@ import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.stage.Stage;
+import javafx.stage.WindowEvent;
 
 
 public class Main extends Application{
@@ -17,20 +18,17 @@ public class Main extends Application{
 	
 	@Override
 	public void start(Stage primaryStage) throws Exception {
-		FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("selectMachineScreen.fxml"));
+		FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("SelectMachineScreen.fxml"));
 		
 		fxmlLoader.setController(controller);
 		
-		try {
-			Parent root = fxmlLoader.load();
-			Scene scene = new Scene(root);
-			primaryStage.setScene(scene);
-			primaryStage.setTitle("Machines");
-			primaryStage.setResizable(true);
-			primaryStage.show();
-		}catch(Exception e) {
-			e.printStackTrace();
-		}
+		Parent root = fxmlLoader.load();
+		
+		Scene scene = new Scene(root);
+		primaryStage.setScene(scene);
+		primaryStage.setTitle("Machines");
+		primaryStage.setResizable(false);
+		primaryStage.show();
 	}
 	
 	public static void main(String[] args) {

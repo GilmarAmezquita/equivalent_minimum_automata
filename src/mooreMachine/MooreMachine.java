@@ -4,16 +4,16 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 
-public class mooreMachine {
+public class MooreMachine {
 	public List<String> alphabet;
-	public List<mooreState> mooreStates;
-	public List<mooreState> mooreReducted;
+	public List<MooreState> mooreStates;
+	public List<MooreState> mooreReducted;
 	
-	public HashMap<String, mooreState> mooreTransitions;
+	public HashMap<String, MooreState> mooreTransitions;
 	
-	public mooreMachine(List<String> states, List<String> aStates, List<String> alphabet) {
+	public MooreMachine(List<String> states, List<String> aStates, List<String> alphabet) {
 		this.alphabet = alphabet;
-		mooreStates = new ArrayList<mooreState>();
+		mooreStates = new ArrayList<MooreState>();
 		addStates(states, aStates);
 	}
 	
@@ -21,7 +21,7 @@ public class mooreMachine {
 		boolean repeatedState = false;
 		for(String s : states) {
 			if(!isAlreadyAState(s)) {
-				mooreState newS = new mooreState(s, isAcceptedState(s,aStates));
+				MooreState newS = new MooreState(s, isAcceptedState(s,aStates));
 				mooreStates.add(newS);
 			}else repeatedState = true;
 		}
@@ -29,7 +29,7 @@ public class mooreMachine {
 	}
 	
 	public boolean isAlreadyAState(String s) {
-		for(mooreState mS : mooreStates) {
+		for(MooreState mS : mooreStates) {
 			if(mS.getStateName() == s) {
 				return true;
 			}
