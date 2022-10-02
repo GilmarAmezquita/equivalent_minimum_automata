@@ -1,20 +1,34 @@
 package model.Moore;
 
+import java.util.List;
+
 public class State {
 	
 	public String state;
-	public Integer out;
+	public int out;
 	
-	public State(String n, Integer s) {
+	public List<String> blockStates;
+	
+	public State(String n, int s) {
 		this.state= n;
 		this.out = s;
+	}
+	
+	public State(String n, int s, List<String> bS) {
+		this.state = n;
+		this.out = s;
+		this.blockStates = bS;
 	}
 	
 	public String getStateName() {
 		return state;
 	}
 	
-	public Integer getStateOut() {
+	public int getStateOut() {
 		return out;
+	}
+	
+	public List<String> getBlockStates(){
+		return blockStates;
 	}
 }

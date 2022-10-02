@@ -3,13 +3,23 @@ package model.Moore;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
-
+/**
+ * Moore's state machine and its minimization.
+ * @author Gilmar Andres Amezquita Romero
+ * @version 0.1
+ */
 public class Machine {
-	public List<String> alphabet;
-	public State initialState;
+	private List<String> alphabet;
+	private State initialState;
+	private List<String> nameStates;
 	public HashMap<String, State> mooreStates;
-	public List<String> nameStates;
 	public HashMap<String, HashMap<String, State>> transitions;
+	
+	private State reducedInitialState;
+	private List<String> reducedStates;
+	private HashMap<String, State> statesReduced;
+	private HashMap<String, HashMap<String, State>> transitionsReduced;
+	
 	/**
 	 * Machine object constructor, of type Moore.
 	 * @param states machine state list.
@@ -25,7 +35,12 @@ public class Machine {
 		initialState = new State(states.get(0), acceptanceState(states.get(0), aStates));
 		addStates(states, aStates);
 		addTransitions(t);
+		removeInaccesible();
+		List<List<String>> reducedBlocks = mooreReduced();
+		defineNewStates(reducedBlocks);
+		defineNewTransitions(reducedBlocks);
 	}
+	
 	/**
 	 * Method to get the machine alphabet
 	 * @return machine alphabet list.
@@ -34,12 +49,49 @@ public class Machine {
 		return alphabet;
 	}
 	/**
+	 * Method to get the machine initial state.
+	 * @return initial state.
+	 */
+	public State getInitialState() {
+		return initialState;
+	}
+	/**
 	 * Method to get the machine states.
 	 * @return machine state list.
 	 */
 	public List<String> getStates(){
 		return nameStates;
 	}
+	
+	/**
+	 * Method to obtain the initial state of the reduced machine.
+	 * @return the initial state.
+	 */
+	public State getReducedInitialState() {
+		return reducedInitialState;
+	}
+	/**
+	 * Method to obtain the states list of the minimized machine.
+	 * @return states list of the minimized machine.
+	 */
+	public List<String> getReducedStates(){
+		return reducedStates;
+	}
+	/**
+	 * Method to obtain the HashMap of the minimized machine states.
+	 * @return HashMap of the minimized machine states
+	 */
+	public HashMap<String, State> getStatesReduced(){
+		return statesReduced;
+	}
+	/**
+	 * Method to obtain the HashMap of the minimized machine transitions.
+	 * @return HashMap of the transitions.
+	 */
+	public HashMap<String, HashMap<String, State>> getTransitionsReduced(){
+		return transitionsReduced;
+	}
+	
 	/**
 	 * Method to add the different states to a HashMap of machine states.
 	 * @param states list of names of the states.
@@ -81,6 +133,7 @@ public class Machine {
 			transitions.put(nameStates.get(i), tr);
 		}
 	}
+	
 	/**
 	 * Primary method for removing inaccessible machine states.
 	 */
@@ -227,5 +280,68 @@ public class Machine {
 			}
 		}
 		return false;
+	}
+	
+	/**
+	 * Method to obtain the new states of the reduced machine.
+	 * @param reducedBlocks blocks of the final partition.
+	 */
+	private void defineNewStates(List<List<String>> reducedBlocks) {
+		List<String> rStates = new ArrayList<>(5);
+		statesReduced = new HashMap<>();
+		char z = 'Z';
+		for(int i = reducedBlocks.size()-1; i>=0; i--) {
+			int out = defineAcceptanceStates(reducedBlocks.get(i));
+			State s = new State(String.valueOf(z),out,reducedBlocks.get(i));
+			statesReduced.put(String.valueOf(z),s);
+			if(i == 0) {
+				reducedInitialState = s;
+			}
+			rStates.add(0,String.valueOf(z));
+			z--;
+		}
+		reducedStates = rStates;
+	}
+	/**
+	 * Method to define if a state is an acceptance states.
+	 * @param newStates list of reduced machine states
+	 * @return 1 if it is an acceptance state, else 0
+	 */
+	private int defineAcceptanceStates(List<String> newStates) {
+		for(String s : newStates) {
+			if(mooreStates.get(s).getStateOut() == 1) {
+				return 1;
+			}
+		}
+		return 0;
+	}
+	/**
+	 * Method to define the transitions of the reduced machine.
+	 * @param reducedBlocks final minimization blocks
+	 */
+	private void defineNewTransitions(List<List<String>> reducedBlocks) {
+		transitionsReduced = new HashMap<>();
+		for(int i = 0; i<reducedBlocks.size(); i++) {
+			HashMap<String, State> nTS = new HashMap<>();
+			for(int j = 0; j<alphabet.size(); j++) {
+				nTS.put(alphabet.get(j),defineNewTransitions(reducedBlocks.get(i).get(0), alphabet.get(j)));
+			}
+			transitionsReduced.put(reducedStates.get(i),nTS);
+		}
+	}
+	/**
+	 * Method to define to which new state a symbol transitions.
+	 * @param state start state.
+	 * @param symbol symbol to transition.
+	 * @return state after transition.
+	 */
+	private State defineNewTransitions(String state, String symbol) {
+		String tState = transitions.get(state).get(symbol).getStateName();
+		for(int i = 0; i<reducedStates.size(); i++) {
+			if(statesReduced.get(reducedStates.get(i)).getBlockStates().contains(tState)) {
+				return statesReduced.get(reducedStates.get(i));
+			}
+		}
+		return null;
 	}
 }
