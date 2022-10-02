@@ -6,7 +6,7 @@ import java.util.List;
 /**
  * Machine class to create a mealy machine and obtain it minimized equivalent machine.
  * @author Gilmar Andres Amezquita Romero
- * @autor Brayan Andres Ortiz
+ * @author Brayan Andres Ortiz
  */
 public class Machine {
 	private List<String> alphabet;
