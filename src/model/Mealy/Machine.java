@@ -28,7 +28,8 @@ public class Machine {
 	public Machine(List<String> states, List<String> alphabet, String[][] transitions) {
 		this.alphabet = alphabet;
 		this.initialState = states.get(0);
-		this.nameStates = states;
+		nameStates = new ArrayList<>();
+		nameStates.addAll(states);
 		addTransitions(transitions);
 		removeInaccessible();
 		reducedBlocks = mealyReduced();

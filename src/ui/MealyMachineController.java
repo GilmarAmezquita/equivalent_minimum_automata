@@ -253,10 +253,11 @@ public class MealyMachineController {
 	}
 	
 	private void printResultReducedStateTable() {
+		
 		String table = "";
     	
-		/*
-    	String[][] reducedMachine = 
+		
+    	String[][] reducedMachine = mealyMachine.getReducedTable();
     	
     	for(int i = 0; i < reducedMachine.length;i++) {
     		for(int j = 0; j < reducedMachine[0].length;j++) {
@@ -265,13 +266,15 @@ public class MealyMachineController {
     		
     		table += "\n";
     	}
-    	*/
+    	
     	txtReducedStateTable.setText(table);
+		
 	}
 	
 	@FXML
     public void finishedMachineOperation(ActionEvent event) {
-
-    }
+		Stage stage = (Stage)txtResultStateTable.getScene().getWindow();
+		stage.close();
+	}
 	
 }
