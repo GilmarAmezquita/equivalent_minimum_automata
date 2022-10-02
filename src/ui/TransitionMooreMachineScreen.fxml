@@ -7,7 +7,6 @@
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.text.Font?>
 
-
 <AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="325.0" prefWidth="595.0" xmlns="http://javafx.com/javafx/18" xmlns:fx="http://javafx.com/fxml/1">
    <children>
       <Label layoutX="64.0" layoutY="70.0" text="State:">
@@ -15,20 +14,23 @@
             <Font size="15.0" />
          </font>
       </Label>
-      <ComboBox layoutX="191.0" layoutY="68.0" prefWidth="150.0" />
+      <ComboBox fx:id="comboStates" layoutX="191.0" layoutY="68.0" prefWidth="150.0" />
       <Label layoutX="64.0" layoutY="102.0" text="Alphabet Element">
          <font>
             <Font size="15.0" />
          </font>
       </Label>
-      <ComboBox layoutX="191.0" layoutY="100.0" prefWidth="150.0" />
+      <ComboBox fx:id="comboAlphabet" layoutX="191.0" layoutY="100.0" prefWidth="150.0" />
       <Label layoutX="64.0" layoutY="140.0" text="Transition State:">
          <font>
             <Font size="15.0" />
          </font>
       </Label>
-      <ComboBox layoutX="191.0" layoutY="138.0" prefWidth="150.0" />
-      <Button layoutX="128.0" layoutY="199.0" mnemonicParsing="false" prefHeight="52.0" prefWidth="127.0" text="Add" />
-      <TextArea layoutX="366.0" layoutY="70.0" prefHeight="210.0" prefWidth="200.0" />
+      <ComboBox fx:id="comboTransition" layoutX="191.0" layoutY="138.0" prefWidth="150.0" />
+      <Button layoutX="60.0" layoutY="200.0" mnemonicParsing="false" onAction="#addTransition" prefHeight="52.0" prefWidth="127.0" text="Add" />
+      <TextArea fx:id="textTransition" editable="false" layoutX="365.0" layoutY="42.0" prefHeight="242.0" prefWidth="200.0" />
+      <Label layoutX="388.0" layoutY="60.0" />
+      <Label fx:id="labelTableStateView" layoutX="398.0" layoutY="70.0" />
+      <Button fx:id="buttonOkTransition" layoutX="214.0" layoutY="200.0" mnemonicParsing="false" onAction="#addedTransition" prefHeight="52.0" prefWidth="127.0" text="OK" />
    </children>
 </AnchorPane>
