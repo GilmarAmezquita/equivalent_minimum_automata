@@ -3,7 +3,11 @@ package model.Mealy;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
-
+/**
+ * Machine class to create a mealy machine and obtain it minimized equivalent machine.
+ * @author Gilmar Andres Amezquita Romero
+ * @author Brayan Andres Ortiz
+ */
 public class Machine {
 	private List<String> alphabet;
 	private String initialState;
@@ -15,6 +19,12 @@ public class Machine {
 	private List<List<String>> reducedBlocks;
 	private HashMap<String, HashMap<String, Transition>> reducedStateTransitions;
 	
+	/**
+	 * Constructor method to create the Mealy machine state.
+	 * @param states machine state list.
+	 * @param alphabet machine alphabet list.
+	 * @param transitions machine transitions matrix.
+	 */
 	public Machine(List<String> states, List<String> alphabet, String[][] transitions) {
 		this.alphabet = alphabet;
 		this.initialState = states.get(0);
@@ -25,29 +35,62 @@ public class Machine {
 		defineNewStates();
 		defineNewTransitions();
 	}
+	/**
+	 * Method to get the machine alphabet.
+	 * @return machine alphabet list.
+	 */
 	public List<String> getAlphabet(){
 		return alphabet;
 	}
+	/**
+	 * Method to get the machine initial state.
+	 * @return a string with the name of the initial state.
+	 */
 	public String getInitialState() {
 		return initialState;
 	}
+	/**
+	 * Method to get the machine states.
+	 * @return machine state list with the names of the states.
+	 */
 	public List<String> getNameStates(){
 		return nameStates;
 	}
+	/**
+	 * Method to get all the state machine transitions.
+	 * @return a hashmap with the transition with the name and the symbol as keys.
+	 */
 	public HashMap<String, HashMap<String, Transition>> getStateTransitions(){
 		return stateTransitions;
 	}
 	
+	/**
+	 * Method to obtain the initial state of the equivalent minimum state machine.
+	 * @return a string with the name of the initial state.
+	 */
 	public String getReducedInitialState() {
 		return reducedInitialState;
 	}
+	/**
+	 * Method to obtain the state list of the equivalent minimum machine.
+	 * @return list with the name of the states.
+	 */
 	public List<String> getReducedStates(){
 		return reducedStates;
 	}
+	/**
+	 * Method to obtain the transitions of the equivalent minimum machine.
+	 * @return a HashMap of the transitions with the state name and alphabet symbols as keys.
+	 */
 	public HashMap<String,HashMap<String, Transition>> getReducedStateTransitions(){
 		return reducedStateTransitions;
 	}
 	
+	/**
+	 * Method to add the list of transitions in the HashMap.
+	 * @param transitions matrix of transitions with states as rows and symbols as columns
+	 * the value of each coordinate is a state name.
+	 */
 	private void addTransitions(String[][] transitions) {
 		stateTransitions = new HashMap<>();
 		for(int i = 0; i<nameStates.size(); i++) {
@@ -61,6 +104,9 @@ public class Machine {
 			stateTransitions.put(nameStates.get(i), aT);
 		}
 	}
+	/**
+	 * Primary method to remove the states that are inaccessible.
+	 */
 	public void removeInaccessible() {
 		List<String> accessibleStates = new ArrayList<>();
 		accessibleStates.add(initialState);
@@ -84,6 +130,12 @@ public class Machine {
 	    	nameStates.remove(rm);
 	    }
 	}
+	/**
+	 * Method to obtain the accessible states by iteration.
+	 * @param accessibleStates list of the accessible states found until the current iteration.
+	 * @param iteration current iteration of the method.
+	 * @return the final list of accessible states.
+	 */
 	private List<String> removeInaccessible(List<String> accessibleStates, int iteration) {
 		iteration += 1;
 		HashMap<String, Transition> current = stateTransitions.get(accessibleStates.get(iteration));
@@ -96,6 +148,10 @@ public class Machine {
 			return accessibleStates;
 		}else return removeInaccessible(accessibleStates, iteration);
 	}
+	/**
+	 * Primary method to minimize the state machine.
+	 * @return The blocks of the final partition.
+	 */
 	public List<List<String>> mealyReduced() {
 		List<List<String>> partitions = new ArrayList<>();
 		List<String> alreadyPartitioned = new ArrayList<>();
@@ -119,6 +175,11 @@ public class Machine {
 		}
 		return mealyReduced(partitions);
 	}
+	/**
+	 * Method to obtain the current partition and the next partition.
+	 * @param partitions list with the blocks of the current partition.
+	 * @return List with the blocks of the final partition.
+	 */
 	private List<List<String>> mealyReduced(List<List<String>> partitions){
 		List<List<String>> newPartitions = new ArrayList<>();
 		for(int i = 0; i<partitions.size(); i++) {
@@ -127,11 +188,23 @@ public class Machine {
 		}
 		return mealyReduced(partitions, newPartitions);
 	}
+	/**
+	 * Method to check if the previous partition equals to the current partition.
+	 * @param partitions list with the blocks of the previous partition.
+	 * @param newPartitions list with the blocks of the current partition.
+	 * @return the next partition if are not equals, else return the final partition.
+	 */
 	private List<List<String>> mealyReduced(List<List<String>> partitions, List<List<String>> newPartitions){
 		if(partitions.size() != newPartitions.size()) {
 			return mealyReduced(newPartitions);
 		}else return newPartitions;
 	}
+	/**
+	 * Method to check if two states have the same output with each of the symbols.
+	 * @param state1 First state.
+	 * @param state2 Second state.
+	 * @return True if both have the same output for each symbol, otherwise return false.
+	 */
 	private boolean sameTransitionsOut(String state1, String state2) {
 		for(String a : alphabet) {
 			if(stateTransitions.get(state1).get(a).getTransitionOut() != stateTransitions.get(state2).get(a).getTransitionOut()) {
@@ -140,6 +213,12 @@ public class Machine {
 		}
 		return true;
 	}
+	/**
+	 * Method to check if the block states stay in the same block or should be split and create new blocks.
+	 * @param p a block of a partition.
+	 * @param prevPartitions the previous partition of the current.
+	 * @return the separate block for the next partition.
+	 */
 	private List<List<String>> reducedPartition(List<String> p, List<List<String>> prevPartitions){
 		List<List<String>> newP = new ArrayList<>();
 		if(p.size() == 1) {
@@ -169,6 +248,13 @@ public class Machine {
 		}
 		return newP;
 	}
+	/**
+	 * Method to check if two states are in the same block in the previous partition.
+	 * @param s0 State one.
+	 * @param si State two.
+	 * @param prevPartitions blocks of the previous partition.
+	 * @return true if both are in the same block in the previous partition, else return false.
+	 */
 	private boolean samePreviousPartition(Transition s0, Transition si, List<List<String>> prevPartitions) {
 		for(List<String> s : prevPartitions) {
 			boolean s0Same = false;
@@ -187,6 +273,9 @@ public class Machine {
 		}
 		return false;
 	}
+	/**
+	 * Method to define the names of the states of the minimized machine.
+	 */
 	private void defineNewStates() {
 		reducedStates = new ArrayList<>();
 		char z = 'Z';
@@ -198,6 +287,9 @@ public class Machine {
 			z--;
 		}
 	}
+	/**
+	 * Method to define the transition from a state with each symbol.
+	 */
 	private void defineNewTransitions() {
 		reducedStateTransitions = new HashMap<>();
 		for(int i = 0; i<reducedStates.size(); i++) {
