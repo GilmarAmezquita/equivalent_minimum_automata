@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.TextArea?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.text.Font?>
+
+
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="341.0" prefWidth="520.0" xmlns="http://javafx.com/javafx/18" xmlns:fx="http://javafx.com/fxml/1">
+   <children>
+      <TextArea fx:id="txtResultStateTable" editable="false" layoutX="39.0" layoutY="63.0" prefHeight="175.0" prefWidth="200.0" />
+      <TextArea fx:id="txtReducedStateTable" editable="false" layoutX="282.0" layoutY="63.0" prefHeight="175.0" prefWidth="200.0" />
+      <Label layoutX="101.0" layoutY="25.0" text="State table">
+         <font>
+            <Font size="16.0" />
+         </font>
+      </Label>
+      <Label layoutX="310.0" layoutY="25.0" text="Reduced State Table">
+         <font>
+            <Font size="16.0" />
+         </font>
+      </Label>
+      <Button layoutX="202.0" layoutY="264.0" mnemonicParsing="false" onAction="#finishedMachineOperation" prefHeight="51.0" prefWidth="117.0" text="OK">
+         <font>
+            <Font size="17.0" />
+         </font>
+      </Button>
+   </children>
+</AnchorPane>

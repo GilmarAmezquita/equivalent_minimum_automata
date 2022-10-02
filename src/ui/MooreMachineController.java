@@ -25,6 +25,12 @@ public class MooreMachineController {
 	private final static String CHAR_SEPARATOR = ",";
 	
 	@FXML
+    private TextArea txtReducedStateTable;
+
+    @FXML
+    private TextArea txtResultStateTable;
+	
+	@FXML
     private Button buttonOkTransition;
 	
 	@FXML
@@ -151,6 +157,8 @@ public class MooreMachineController {
     		String t = comboTransition.getSelectionModel().getSelectedItem();
     		
     		stateTable[states.indexOf(s)+1][alphabet.indexOf(a)+1] = t;
+    		transitions[states.indexOf(s)][alphabet.indexOf(a)] = t;
+    		
     		labelTableStateView.setText("");
     		printStateTable();
     	}else {
@@ -183,6 +191,7 @@ public class MooreMachineController {
     	int e = alphabet.size()+1;
     	
     	stateTable = new String[w][e];
+    	transitions = new String[w-1][e-1];
     	
     	for(int i = 1; i < e; i++) {
     		stateTable[0][i] = alphabet.get(i-1);
@@ -201,6 +210,96 @@ public class MooreMachineController {
     
     @FXML
     public void addedTransition(ActionEvent event) {
+    	if(testTransition()) {
+    		
+    		mooreMachine = new Machine(states, acceptanceStates, alphabet, transitions);
+    		openResultScreen();
+    		
+    	} else {
+    		Alert alert = new Alert(Alert.AlertType.WARNING);
+    		alert.setHeaderText(null);
+    		alert.setTitle("Transiciones vacías");
+    		alert.setContentText("Por favor completas la transiciones de la maquina.");
+    		alert.showAndWait();
+    	}
+    }
+    
+    private void printResultStateTable() {
+    	String table = "";
     	
+    	for(int i = 0; i < stateTable.length;i++) {
+    		for(int j = 0; j < stateTable[0].length;j++) {
+    			table += stateTable[i][j] + " ";
+    		}
+    		
+    		table += "\n";
+    	}
+    	
+    	txtResultStateTable.setText(table);
+    }
+    
+    private void printResultReducedStateTable() {
+    	String table = "";
+    	
+    	List<List<String>> reducedMachine = mooreMachine.mooreReduced();
+    	
+    	for(int i = 0; i < reducedMachine.size();i++) {
+    		for(int j = 0; j < reducedMachine.get(0).size();j++) {
+    			table += reducedMachine.get(i).get(j) + " ";
+    		}
+    		
+    		table += "\n";
+    	}
+    	
+    	txtReducedStateTable.setText(table);
+    }
+    
+    private void openResultScreen() {
+    	
+    	Stage transitionState = (Stage) comboTransition.getScene().getWindow();
+		transitionState.close();
+    	
+    	FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("ResultMachineScreen.fxml"));
+		
+		fxmlLoader.setController(this);
+		
+		try{
+			Parent root = fxmlLoader.load();
+			
+			Scene scene = new Scene(root);
+			Stage stage = new Stage();
+			stage.setScene(scene);
+			stage.setTitle("Moore Machine");
+			stage.setResizable(false);
+			stage.initModality(Modality.APPLICATION_MODAL);
+			stage.show();
+			
+			printResultStateTable();
+			printResultReducedStateTable();
+			
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+    }
+    
+    private boolean testTransition() {
+    	
+    	boolean accepted = true;
+    	
+    	for(int i = 0; i < stateTable.length;i++) {
+    		for(int j = 0; j < stateTable[0].length;j++) {
+    			if(stateTable[i][j] == null) {
+    				accepted = false;
+    			}
+    		}
+    	}
+    	
+    	return accepted;
+    }
+    
+    @FXML
+    public void finishedMachineOperation(ActionEvent event) {
+    	Stage stage = (Stage) txtResultStateTable.getScene().getWindow();
+    	stage.close();
     }
 }
