@@ -8,36 +8,41 @@
 
 <AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="355.0" prefWidth="612.0" xmlns="http://javafx.com/javafx/18" xmlns:fx="http://javafx.com/fxml/1">
    <children>
-      <Label layoutX="165.0" layoutY="83.0" text="States:" AnchorPane.leftAnchor="165.0" AnchorPane.rightAnchor="391.0" AnchorPane.topAnchor="83.0">
+      <Label layoutX="160.0" layoutY="109.0" text="States:" AnchorPane.leftAnchor="160.0" AnchorPane.rightAnchor="396.0" AnchorPane.topAnchor="109.0">
          <font>
             <Font size="15.0" />
          </font>
       </Label>
-      <TextField fx:id="statesField" layoutX="294.0" layoutY="78.0" prefHeight="30.0" prefWidth="142.0" promptText="A,B,C,D,E" AnchorPane.leftAnchor="294.0" AnchorPane.rightAnchor="164.0" AnchorPane.topAnchor="78.0">
+      <TextField fx:id="statesField" layoutX="289.0" layoutY="104.0" prefHeight="30.0" prefWidth="142.0" promptText="A,B,C,D,E" AnchorPane.leftAnchor="289.0" AnchorPane.rightAnchor="169.0" AnchorPane.topAnchor="104.0">
          <font>
             <Font size="15.0" />
          </font>
       </TextField>
-      <Label layoutX="165.0" layoutY="126.0" text="Acceptance States:" AnchorPane.leftAnchor="165.0" AnchorPane.rightAnchor="311.0" AnchorPane.topAnchor="126.0">
+      <Label layoutX="160.0" layoutY="152.0" text="Acceptance States:" AnchorPane.leftAnchor="160.0" AnchorPane.rightAnchor="316.0" AnchorPane.topAnchor="152.0">
          <font>
             <Font size="15.0" />
          </font>
       </Label>
-      <TextField fx:id="acceptanceStatesField" layoutX="294.0" layoutY="121.0" prefHeight="30.0" prefWidth="142.0" promptText="D,E" AnchorPane.leftAnchor="294.0" AnchorPane.rightAnchor="164.0" AnchorPane.topAnchor="121.0">
+      <TextField fx:id="acceptanceStatesField" layoutX="289.0" layoutY="147.0" prefHeight="30.0" prefWidth="142.0" promptText="D,E" AnchorPane.leftAnchor="289.0" AnchorPane.rightAnchor="169.0" AnchorPane.topAnchor="147.0">
          <font>
             <Font size="15.0" />
          </font>
       </TextField>
-      <Label layoutX="165.0" layoutY="175.0" text="Alphabet:" AnchorPane.leftAnchor="165.0" AnchorPane.rightAnchor="371.0" AnchorPane.topAnchor="175.0">
+      <Label layoutX="160.0" layoutY="201.0" text="Alphabet:" AnchorPane.leftAnchor="160.0" AnchorPane.rightAnchor="376.0" AnchorPane.topAnchor="201.0">
          <font>
             <Font size="15.0" />
          </font>
       </Label>
-      <Button layoutX="226.0" layoutY="241.0" mnemonicParsing="false" onAction="#addMachineOk" prefHeight="45.0" prefWidth="136.0" text="Ok" />
-      <TextField fx:id="alfabetField" layoutX="294.0" layoutY="170.0" prefHeight="30.0" prefWidth="142.0" promptText="a,b,c - 1,2,3" AnchorPane.leftAnchor="294.0" AnchorPane.rightAnchor="164.0" AnchorPane.topAnchor="170.0">
+      <Button layoutX="221.0" layoutY="267.0" mnemonicParsing="false" onAction="#addMachineOk" prefHeight="45.0" prefWidth="136.0" text="Ok" />
+      <TextField fx:id="alfabetField" layoutX="289.0" layoutY="196.0" prefHeight="30.0" prefWidth="142.0" promptText="a,b,c - 1,2,3" AnchorPane.leftAnchor="289.0" AnchorPane.rightAnchor="169.0" AnchorPane.topAnchor="196.0">
          <font>
             <Font size="15.0" />
          </font>
       </TextField>
+      <Label layoutX="176.0" layoutY="49.0" text="Moore Machine Minimizer">
+         <font>
+            <Font name="System Bold" size="21.0" />
+         </font>
+      </Label>
    </children>
 </AnchorPane>
