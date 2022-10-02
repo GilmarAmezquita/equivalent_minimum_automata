@@ -2,9 +2,9 @@ package model.Mealy;
 
 public class Transition {
 	private String transitionEnd;
-	private String transitionOut;
+	private int transitionOut;
 	
-	public Transition(String tE, String tO) {
+	public Transition(String tE, int tO) {
 		transitionEnd = tE;
 		transitionOut = tO;
 	}
@@ -12,7 +12,7 @@ public class Transition {
 	public String getTransitionEnd() {
 		return transitionEnd;
 	}
-	public String getTransitionOut() {
+	public int getTransitionOut() {
 		return transitionOut;
 	}
 }
