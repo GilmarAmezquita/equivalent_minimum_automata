@@ -12,17 +12,18 @@ public class ScreenController {
 	
 	private MooreMachineController mooreController;
 	
-	private MealyMachineController mealyControoler;
+	private MealyMachineController mealyController;
 	
 	public ScreenController() {
 		mooreController = new MooreMachineController();
+		mealyController = new MealyMachineController();
 	}
 	
 	@FXML
     public void selectMealyMachine(ActionEvent event) {
 		FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("MealyMachineStatesScreen.fxml"));
 		
-		fxmlLoader.setController(mealyControoler);
+		fxmlLoader.setController(mealyController);
 		
 		try{
 			Parent root = fxmlLoader.load();
@@ -30,7 +31,7 @@ public class ScreenController {
 			Scene scene = new Scene(root);
 			Stage stage = new Stage();
 			stage.setScene(scene);
-			stage.setTitle("Mealy Machine");
+			stage.setTitle("Mealy Machine Reducer");
 			stage.setResizable(false);
 			stage.initModality(Modality.APPLICATION_MODAL);
 			stage.show();
@@ -52,7 +53,7 @@ public class ScreenController {
 			Scene scene = new Scene(root);
 			Stage stage = new Stage();
 			stage.setScene(scene);
-			stage.setTitle("Moore Machine");
+			stage.setTitle("Moore Machine Reducer");
 			stage.setResizable(false);
 			stage.initModality(Modality.APPLICATION_MODAL);
 			stage.show();

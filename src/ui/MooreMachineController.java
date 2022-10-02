@@ -219,7 +219,7 @@ public class MooreMachineController {
     		Alert alert = new Alert(Alert.AlertType.WARNING);
     		alert.setHeaderText(null);
     		alert.setTitle("Transiciones vacías");
-    		alert.setContentText("Por favor completas la transiciones de la maquina.");
+    		alert.setContentText("Por favor completa las transiciones de la maquina.");
     		alert.showAndWait();
     	}
     }
@@ -241,11 +241,11 @@ public class MooreMachineController {
     private void printResultReducedStateTable() {
     	String table = "";
     	
-    	List<List<String>> reducedMachine = mooreMachine.mooreReduced();
+    	String[][] reducedMachine = mooreMachine.getReducedTable();
     	
-    	for(int i = 0; i < reducedMachine.size();i++) {
-    		for(int j = 0; j < reducedMachine.get(0).size();j++) {
-    			table += reducedMachine.get(i).get(j) + " ";
+    	for(int i = 0; i < reducedMachine.length;i++) {
+    		for(int j = 0; j < reducedMachine[0].length;j++) {
+    			table += reducedMachine[i][j] + " ";
     		}
     		
     		table += "\n";

@@ -15,22 +15,26 @@
          </font>
       </Label>
       <ComboBox fx:id="comboStates" layoutX="191.0" layoutY="68.0" prefWidth="150.0" />
-      <Label layoutX="64.0" layoutY="102.0" text="Alphabet Symbol:">
+      <Label layoutX="64.0" layoutY="102.0" text="Alphabet symbol:">
          <font>
             <Font size="15.0" />
          </font>
       </Label>
-      <ComboBox fx:id="comboAlphabet" layoutX="191.0" layoutY="100.0" prefWidth="150.0" />
+      <ComboBox fx:id="comboAlphabetInput" layoutX="191.0" layoutY="100.0" prefWidth="150.0" />
       <Label layoutX="64.0" layoutY="140.0" text="Transition State:">
          <font>
             <Font size="15.0" />
          </font>
       </Label>
       <ComboBox fx:id="comboTransition" layoutX="191.0" layoutY="138.0" prefWidth="150.0" />
-      <Button layoutX="60.0" layoutY="200.0" mnemonicParsing="false" onAction="#addTransition" prefHeight="52.0" prefWidth="127.0" text="Add" />
-      <TextArea fx:id="textTransition" editable="false" layoutX="365.0" layoutY="42.0" prefHeight="242.0" prefWidth="200.0" />
-      <Label layoutX="388.0" layoutY="60.0" />
-      <Label fx:id="labelTableStateView" layoutX="398.0" layoutY="70.0" />
-      <Button fx:id="buttonOkTransition" layoutX="214.0" layoutY="200.0" mnemonicParsing="false" onAction="#addedTransition" prefHeight="52.0" prefWidth="127.0" text="OK" />
+      <Button layoutX="61.0" layoutY="232.0" mnemonicParsing="false" onAction="#addTransition" prefHeight="52.0" prefWidth="127.0" text="Add" />
+      <TextArea fx:id="txtTransition" editable="false" layoutX="365.0" layoutY="42.0" prefHeight="242.0" prefWidth="200.0" />
+      <Button fx:id="buttonOkTransition" layoutX="215.0" layoutY="232.0" mnemonicParsing="false" onAction="#addedTransition" prefHeight="52.0" prefWidth="127.0" text="OK" />
+      <Label layoutX="64.0" layoutY="186.0" text="Output Element">
+         <font>
+            <Font size="15.0" />
+         </font>
+      </Label>
+      <ComboBox fx:id="comboAlphabetOutput" layoutX="191.0" layoutY="184.0" prefWidth="150.0" />
    </children>
 </AnchorPane>
