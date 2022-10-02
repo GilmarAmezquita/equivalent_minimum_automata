@@ -109,10 +109,10 @@ public class Machine {
 	    }
 	}
 	/**
-	 * 
-	 * @param accessibleStates
-	 * @param iteration
-	 * @return
+	 * Method to identify the states that are accessible in the machine.
+	 * @param accessibleStates list of accessible states identified up to that iteration.
+	 * @param iteration current iteration of the method
+	 * @return the list of accessible states
 	 */
 	private List<String> removeInaccessible(List<String> accessibleStates, int iteration) {
 		iteration += 1;
@@ -126,85 +126,106 @@ public class Machine {
 			return accessibleStates;
 		}else return removeInaccessible(accessibleStates, iteration);
 	}
-	/*
-	public List<List<State>> mooreReduced() {
-		List<State> outFalse = new ArrayList<>();
-		List<State> outTrue = new ArrayList<>();
-		for(State s : mooreStates) {
-			if(s.getStateOut() == 0) {
+	/**
+	 * Primary method for reduce the machine states.
+	 * @return machine reduced.
+	 */
+	public List<List<String>> mooreReduced() {
+		List<String> outFalse = new ArrayList<>();
+		List<String> outTrue = new ArrayList<>();
+		for(String s : nameStates) {
+			if(mooreStates.get(s).getStateOut() == 0) {
 				outFalse.add(s);
 			}else outTrue.add(s);
 		}
-		List<List<State>> partitions = new ArrayList<>();
+		List<List<String>> partitions = new ArrayList<>();
 		partitions.add(outFalse);
 		partitions.add(outTrue);
 		return mooreReduced(partitions);
 	}
-	private List<List<State>> mooreReduced(List<List<State>> partitions){
-		List<List<State>> newPartitions = new ArrayList<>();
+	/**
+	 * Method to start reducing the machine from P2
+	 * @param partitions partitions list
+	 * @return returns the list of states to reduce the machine
+	 */
+	private List<List<String>> mooreReduced(List<List<String>> partitions){
+		List<List<String>> newPartitions = new ArrayList<>();
 		for(int i = 0; i<partitions.size(); i++) {
-			List<State> p = partitions.get(i);
+			List<String> p = partitions.get(i);
 			newPartitions.addAll(reducedPartition(p, partitions));
 		}
+		return mooreReduced(partitions, newPartitions);
+	}
+	/**
+	 * Method to check if partition k is equal to partition k-1
+	 * @param partitions partition k-1
+	 * @param newPartitions partition k
+	 * @return return the new partition.
+	 */
+	private List<List<String>> mooreReduced(List<List<String>> partitions, List<List<String>> newPartitions){
 		if(partitions.size() != newPartitions.size()) {
 			return mooreReduced(newPartitions);
 		}else return newPartitions;
 	}
-	
 	/**
-	 * Obtiene un bloque de la partición y revisa si los estados del bloque se mantienen
-	 * en la mismo bloque o deben de separarse y crear nuevos bloques.
-	 
-	private List<List<State>> reducedPartition(List<State> p, List<List<State>> parts){
-		List<List<State>> newP = new ArrayList<>();
-		if(p.size()<1) {
+	 * Get a block from the partition and check if the block states stay in the same block 
+	 * or should be split and create new blocks.
+	 * @param p block of the previous partition
+	 * @param prevPartitions previous partition.
+	 * @return the new blocks for the next partition.
+	 */
+	private List<List<String>> reducedPartition(List<String> p, List<List<String>> prevPartitions){
+		List<List<String>> newP = new ArrayList<>();
+		if(p.size() == 1) {
 			newP.add(p);
 			return newP;
 		}
-		List<State> p1 = new ArrayList<>();
-		List<State> pPosible = new ArrayList<>();
-		p1.add(p.get(0));
+		List<String> pT = new ArrayList<>();
+		List<String> pNotYet = new ArrayList<>();
+		pT.add(p.get(0));
+		
 		for(int i = 1; i<p.size(); i++) {
 			boolean sameTransitionParts = true;
 			for(int j = 0; j<alphabet.size() && sameTransitionParts; j++) {
-				HashMap<String, State> s0 = mooreTransitions.get(p.get(0).getStateName());
-				HashMap<String, State> sa = mooreTransitions.get(p.get(i).getStateName());
+				HashMap<String, State> s0 = transitions.get(p.get(0));
+				HashMap<String, State> sa = transitions.get(p.get(i));
 				State s0Transition = s0.get(alphabet.get(j));
-				State saTransition = sa.get(alphabet.get(j));
-				sameTransitionParts = samePreviousPartition(s0Transition, saTransition, parts);
+				State siTransition = sa.get(alphabet.get(j));
+				sameTransitionParts = samePreviousPartition(s0Transition, siTransition, prevPartitions);
 			}
 			if(sameTransitionParts) {
-				p1.add(p.get(i));
-			}else pPosible.add(p.get(i));
+				pT.add(p.get(i));
+			}else pNotYet.add(p.get(i));
 		}
-		newP.add(p1);
-		if(!pPosible.isEmpty()) {
-			newP.addAll(reducedPartition(pPosible, parts));
+		newP.add(pT);
+		if(!pNotYet.isEmpty()) {
+			newP.addAll(reducedPartition(pNotYet, prevPartitions));
 		}
 		return newP;
 	}
-	
 	/**
-	 * Revisa si las transiciones de dos estados de encuentran en el mismo bloque
-	 * de la partición anterior.
-	 
-	private boolean samePreviousPartition(State s0, State sa, List<List<State>> parts) {
-		for(List<State> s : parts) {
+	 * Method to check if two states are in the same block in the previous partition.
+	 * @param s0 first state.
+	 * @param si second state.
+	 * @param prevPartitions previous partition.
+	 * @return true if they are on the same partition, otherwise false.
+	 */
+	private boolean samePreviousPartition(State s0, State si, List<List<String>> prevPartitions) {
+		for(List<String> s : prevPartitions) {
 			boolean s0Same = false;
-			boolean saSame = false;
-			for(State sS : s) {
-				if(sS.getStateName() == s0.getStateName()) {
+			boolean siSame = false;
+			for(String sS : s) {
+				if(sS == s0.getStateName()) {
 					s0Same = true;
 				}
-				if(sS.getStateName() == sa.getStateName()) {
-					saSame = true;
+				if(sS== si.getStateName()) {
+					siSame = true;
 				}
 			}
-			if(s0Same && saSame) {
+			if(s0Same && siSame) {
 				return true;
 			}
 		}
 		return false;
 	}
-	*/
 }
