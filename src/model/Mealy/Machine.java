@@ -309,4 +309,19 @@ public class Machine {
 			reducedStateTransitions.put(reducedStates.get(i), nST);
 		}
 	}
+	/**
+	 * Method to obtain a table of the equivalent minimum machine.
+	 * @return a matrix with the states, transitions and outputs.
+	 */
+	public String[][] getReducedTable(){
+		String[][] table = new String[reducedStates.size()][(alphabet.size())+1];
+		for(int i = 0; i<reducedStates.size(); i++) {
+			table[i][0] = reducedStates.get(i);
+			for(int j = 0; j<alphabet.size(); j++) {
+				table[i][j+1] = ""+reducedStateTransitions.get(reducedStates.get(i)).get(alphabet.get(j)).getTransitionEnd()
+						+","+reducedStateTransitions.get(reducedStates.get(i)).get(alphabet.get(j)).getTransitionOut();
+			}
+		}
+		return table;
+	}
 }
