@@ -3,7 +3,9 @@
     Un programa que permite insertar maquinas de moore y mealy, para posteriormente recibir una maquina equivalente reducida.
 </p>
 
-Guía para el usuario [here](doc/Instrucciones para usuario.pdf)
+Guía para el usuario [here](https://github.com/GilmarAmezquita/equivalent_minimum_automata/blob/c2ff14d95a2b2f2e4414c21d84b9ed5fc8036c59/doc/Instrucciones%20para%20usuario.pdf)
+
+
 
 ## Technologies Used
 <div>
