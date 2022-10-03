@@ -3,6 +3,7 @@
     Un programa que permite insertar maquinas de moore y mealy, para posteriormente recibir una maquina equivalente reducida.
 </p>
 
+Guía para el usuario [here](doc/Instrucciones para usuario.pdf)
 
 ## Technologies Used
 <div>
